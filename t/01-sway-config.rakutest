@@ -1,0 +1,210 @@
+use v6.d;
+
+use Test;
+
+use Sway::Config:auth<zef:CIAvash>;
+
+plan 15;
+
+my Sway::Config $sway_config;
+my Match $config_match;
+
+subtest 'Config got parsed', {
+    my $config = q:to/END/;
+    # Sway Config
+
+    set $mod Mod4
+    set $left h
+    set $term sakura
+    set $bindsym bindsym --to-code
+
+    bindsym $mod+Return exec $term
+
+    input * {
+        xkb_layout "us,ir"
+        xkb_options "grp:shifts_toggle,compose:caps"
+        xkb_numlock enable
+    }
+
+    $bindsym $mod+$left focus left
+
+    mode resize {
+        $bindsym Left resize shrink width 10px
+        $bindsym Down resize grow height 10px
+        $bindsym Up resize shrink height 10px
+        $bindsym Right resize grow width 10px
+
+        # Return to default mode
+        $bindsym Return mode "default"
+        $bindsym Escape mode "default"
+    }
+    $bindsym --locked $mod+r mode resize
+
+    bar {
+        position top
+
+        # When the status_command prints a new line to stdout, swaybar updates.
+        # The default just shows the current date and time.
+        status_command while date +'%Y-%m-%d %l:%M:%S %p'; do sleep 1; done
+
+        colors {
+            statusline #ffffff
+            background #323232
+            inactive_workspace #32323200 #32323200 #5c5c5c
+        }
+    }
+
+    [con_id="something"] focus
+    END
+
+    plan 2;
+
+    ok $sway_config .= new(:$config), 'Parse Config';
+    ok $config_match = $sway_config.match, 'Get match object';
+    bail-out 'Nothing was matched during parsing' unless $config_match;
+}
+
+subtest 'Correct match is returned', {
+    plan 13;
+    
+    is $config_match.caps.elems, 12, 'Number of captures is correct';
+    is $config_match<comment>[0], '# Sway Config', 'First comment is matched correctly';
+    is $config_match<config>[0]<command>, 'set', 'First config command is matched correctly';
+    is $config_match<config>[0]<value><variable_name>, '$mod', 'First config variable is matched correctly';
+    is $config_match<config>[0]<value><generic_value>, ' Mod4', 'First config value is matched correctly';
+    is $config_match<config>[4]<command>, 'bindsym', 'First bindsym config command is matched correctly';
+    is $config_match<config>[4]<value><variable_name>[0], '$mod',
+    'First bindsym variable is matched correctly';
+    is $config_match<config>[4]<value><generic_value>, '+Return exec ',
+    'First bindsym value is matched correctly';
+    is $config_match<config>[4]<value><variable_name>[1], '$term',
+    'First bindsym\'s second variable is matched correctly';
+    is $config_match<config>[5]<command>, 'input',
+    'Input command is matched correctly';
+    is $config_match<config>[5]<value><generic_value>, '*',
+    'Input value is matched correctly';
+    is $config_match<config>[5]<block><value>[0]<generic_value>, 'xkb_layout "us,ir"',
+    'Input block value is matched correctly';
+    is $config_match<config>[7]<block><config>[0].Str.trim,
+    '$bindsym Left resize shrink width 10px', 'First value of last block is matched correctly';
+}
+
+subtest 'Correct configs are returned', {
+    plan 8;
+
+    my @configs = $sway_config.configs;
+    is @configs.elems, 22, 'Number of configs is correct';
+    is @configs[0], 'set $mod Mod4', 'First config is correct';
+    is @configs[4], 'bindsym Mod4+Return exec sakura', 'First bindsym is correct';
+    is @configs[8], 'bindsym --to-code Mod4+h focus left', '$bindsym with multiple variables is correct';
+    is @configs[9], 'mode resize bindsym --to-code Left resize shrink width 10px',
+    'Block content is absorbed correctly';
+    is @configs[15], 'bindsym --to-code --locked Mod4+r mode resize',
+    'Command with variable and multiple options is correct';
+    subtest 'Block with inner block is absorbed correctly', {
+        plan 5;
+
+        is @configs[16], 'bar position top';
+        is @configs[17], 'bar status_command while date +\'%Y-%m-%d %l:%M:%S %p\'; do sleep 1; done';
+        is @configs[18], 'bar colors statusline #ffffff';
+        is @configs[19], 'bar colors background #323232';
+        is @configs[20], 'bar colors inactive_workspace #32323200 #32323200 #5c5c5c';
+    }
+    is @configs[21], '[con_id="something"] focus';
+}
+
+subtest 'Correct variable is returned', {
+    plan 3;
+
+    my %variable = $sway_config.variable;
+    is %variable.elems, 4, 'Number of variables is correct';
+    is %variable<$mod>, 'Mod4', 'First variable is correct';
+    is %variable<$bindsym>, 'bindsym --to-code', 'Last variable is correct';
+}
+
+subtest 'Correct mode is returned', {
+    plan 11;
+
+    my %mode = $sway_config.mode;
+    is %mode.elems, 1, 'Number of modes is correct';
+    is %mode<resize><pango_markup>, False, 'Mode\'s command option is correct';
+    is %mode<resize><sub_commands>.elems, 6, 'Mode\'s commands count is correct';
+    is %mode<resize><key_binding>.elems, 6, 'Mode\'s key bindings count is correct';
+    is %mode<resize><key_binding><Left><command>, 'resize shrink width 10px',
+    'Mode\'s Left key binding is correct';
+    is-deeply %mode<resize><key_binding><Left><options>, ['--to-code'], 'Mode\'s Left key options are correct';
+    is %mode<resize><key_binding><Escape><command>, 'mode "default"', 'Mode\'s last key binding is correct';
+    is %mode<resize><key_bindings>.elems, 6, 'Mode\'s key bindings count is correct';
+    is %mode<resize><key_bindings>[0]<Left><command>, 'resize shrink width 10px',
+    'Mode\'s Left key binding is correct';
+    is-deeply %mode<resize><key_bindings>[0]<Left><options>, ['--to-code'],
+    'Mode\'s Left key options are correct';
+    is %mode<resize><key_bindings>[5]<Escape><command>, 'mode "default"', 'Mode\'s last key binding is correct';
+}
+
+subtest 'Correct key_binding is returned', {
+    plan 4;
+
+    my %key_binding = $sway_config.key_binding;
+    is %key_binding.elems, 3, 'Number of key bindings is correct';
+    is %key_binding<Mod4+Return><command>, 'exec sakura', 'First key binding is correct';
+    is %key_binding<Mod4+r><command>, 'mode resize', 'Last key binding is correct';
+    is %key_binding<Mod4+r><options>, <--to-code --locked>, 'Last key options are correct';
+}
+
+subtest 'Correct key_bindings are returned', {
+    plan 4;
+
+    my @key_binding = $sway_config.key_bindings;
+    is @key_binding.elems, 3, 'Number of key bindings is correct';
+    is @key_binding[0]<Mod4+Return><command>, 'exec sakura', 'First key binding is correct';
+    is @key_binding[2]<Mod4+r><command>, 'mode resize', 'Last key binding is correct';
+    is @key_binding[2]<Mod4+r><options>, <--to-code --locked>, 'Last key options are correct';
+}
+
+{
+    my IO::Path:D $test_dir = $?FILE.IO.parent;
+    my IO::Path:D $config_dir = $test_dir.add: 'data';
+    my IO::Path:D $expected_data_dir = $test_dir.add: 'expected_data';
+
+    subtest 'Config got parsed', {
+        plan 2;
+
+        ok $sway_config .= new(config_path => $config_dir.add('config'), :$config_dir), 'Parse Config';
+        ok $config_match = $sway_config.match, 'Get match object';
+        bail-out 'Nothing was matched during parsing' unless $config_match;
+    }
+
+    use Test::Differences:auth<github:rbt>;
+
+    for <match configs variable mode key_binding key_bindings all> -> $method {
+        my IO::Path:D $expected_file = $expected_data_dir.add: "$method.json";
+        my Cool:D $data = $sway_config."$method"();
+        my Str:D $json = get_json $method, $data;
+
+        # Generate expected data if env var is set
+        $expected_file.spurt: $json if %*ENV<GENERATE_TEST_DATA>;
+
+        # Test the data
+        my Str:D $expected_data = $expected_file.slurp;
+
+        eq_or_diff $json, $expected_data, "$method data are correct";
+    }
+
+    sub get_json (Str:D $name, Cool:D $data --> Str:D) {
+        use JSON::Fast;
+
+        do given $name {
+            when 'match' {
+                use Sway::Config::Utils :match;
+                to-json :sorted-keys, match_to_strs $data;
+            }
+            when 'configs' {
+                to-json $data;
+            }
+            default {
+                to-json :sorted-keys, $data;
+            }
+        }
+    }
+}

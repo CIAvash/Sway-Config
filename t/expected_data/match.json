@@ -1,0 +1,1744 @@
+[
+  {
+    "comment": "# Default config for sway"
+  },
+  {
+    "comment": "#"
+  },
+  {
+    "comment": "# Copy this to ~/.config/sway/config and edit it to your liking."
+  },
+  {
+    "comment": "#"
+  },
+  {
+    "comment": "# Read `man 5 sway` for a complete reference."
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "config_command": "include"
+        }
+      },
+      {
+        "value": [
+          {
+            "generic_value": "variables"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "comment": "### Output configuration"
+  },
+  {
+    "comment": "#"
+  },
+  {
+    "comment": "# Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)"
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "config_command": {
+            "output_command": "output"
+          }
+        }
+      },
+      {
+        "value": [
+          {
+            "generic_value": "* bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "comment": "#"
+  },
+  {
+    "comment": "# Example configuration:"
+  },
+  {
+    "comment": "#"
+  },
+  {
+    "comment": "#   output HDMI-A-1 resolution 1920x1080 position 1920,0"
+  },
+  {
+    "comment": "#"
+  },
+  {
+    "comment": "# You can get the names of your outputs by running: swaymsg -t get_outputs"
+  },
+  {
+    "comment": "### Idle configuration"
+  },
+  {
+    "comment": "#"
+  },
+  {
+    "comment": "# Example configuration:"
+  },
+  {
+    "comment": "#"
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "exec"
+        }
+      },
+      {
+        "value": [
+          {
+            "generic_value": "swayidle -w"
+          },
+          {
+            "backslash_newline": " \\\n"
+          },
+          {
+            "generic_value": "         timeout 300 'swaylock -f -c 000000'"
+          },
+          {
+            "backslash_newline": " \\\n"
+          },
+          {
+            "generic_value": "         timeout 600 'swaymsg \"output * dpms off\"' resume 'swaymsg \"output * dpms on\"'"
+          },
+          {
+            "backslash_newline": " \\\n"
+          },
+          {
+            "generic_value": "         before-sleep 'swaylock -f -c 000000'"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "comment": "#"
+  },
+  {
+    "comment": "# This will lock your screen after 300 seconds of inactivity, then turn off"
+  },
+  {
+    "comment": "# your displays after another 300 seconds, and turn your screens back on when"
+  },
+  {
+    "comment": "# resumed. It will also lock your screen before your computer goes to sleep."
+  },
+  {
+    "comment": "### Input configuration"
+  },
+  {
+    "comment": "#"
+  },
+  {
+    "comment": "# Example configuration:"
+  },
+  {
+    "comment": "#"
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "config_command": {
+            "input_command": "input"
+          }
+        }
+      },
+      {
+        "value": [
+          {
+            "generic_value": "\"2:14:SynPS/2_Synaptics_TouchPad\""
+          }
+        ]
+      },
+      {
+        "block": [
+          {
+            "value": [
+              {
+                "generic_value": "dwt enabled"
+              }
+            ]
+          },
+          {
+            "value": [
+              {
+                "generic_value": "tap enabled"
+              }
+            ]
+          },
+          {
+            "value": [
+              {
+                "generic_value": "natural_scroll enabled"
+              }
+            ]
+          },
+          {
+            "value": [
+              {
+                "generic_value": "middle_emulation enabled"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "comment": "#"
+  },
+  {
+    "comment": "# You can get the names of your inputs by running: swaymsg -t get_inputs"
+  },
+  {
+    "comment": "# Read `man 5 sway-input` for more information about this section."
+  },
+  {
+    "comment": "### Key bindings"
+  },
+  {
+    "comment": "#"
+  },
+  {
+    "comment": "# Basics:"
+  },
+  {
+    "comment": "#"
+  },
+  {
+    "comment": "# Start a terminal"
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+Return exec "
+          },
+          {
+            "variable_name": "$term"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "comment": "# Kill focused window"
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "variable_name": "$bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+Shift+q kill"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "comment": "# Start your launcher"
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "variable_name": "$bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+d exec "
+          },
+          {
+            "variable_name": "$menu"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "comment": "# Drag floating windows by holding down $mod and left mouse button."
+  },
+  {
+    "comment": "# Resize them with right mouse button + $mod."
+  },
+  {
+    "comment": "# Despite the name, also works for non-floating windows."
+  },
+  {
+    "comment": "# Change normal to inverse to use left mouse button for resizing and right"
+  },
+  {
+    "comment": "# mouse button for dragging."
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "floating_modifier"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": " normal"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "comment": "# Reload the configuration file"
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+Shift+c reload"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "comment": "# Exit sway (logs you out of your Wayland session)"
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "comment": "#"
+  },
+  {
+    "comment": "# Moving around:"
+  },
+  {
+    "comment": "#"
+  },
+  {
+    "comment": "# Move your focus around"
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "variable_name": "$bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+"
+          },
+          {
+            "variable_name": "$left"
+          },
+          {
+            "generic_value": " focus left"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "variable_name": "$bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+"
+          },
+          {
+            "variable_name": "$down"
+          },
+          {
+            "generic_value": " focus down"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "variable_name": "$bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+"
+          },
+          {
+            "variable_name": "$up"
+          },
+          {
+            "generic_value": " focus up"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "variable_name": "$bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+"
+          },
+          {
+            "variable_name": "$right"
+          },
+          {
+            "generic_value": " focus right"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "comment": "# Or use $mod+[up|down|left|right]"
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+Left focus left"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+Down focus down"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+Up focus up"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+Right focus right"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "comment": "# Move the focused window with the same, but add Shift"
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+Shift+"
+          },
+          {
+            "variable_name": "$left"
+          },
+          {
+            "generic_value": " move left"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+Shift+"
+          },
+          {
+            "variable_name": "$down"
+          },
+          {
+            "generic_value": " move down"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+Shift+"
+          },
+          {
+            "variable_name": "$up"
+          },
+          {
+            "generic_value": " move up"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+Shift+"
+          },
+          {
+            "variable_name": "$right"
+          },
+          {
+            "generic_value": " move right"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "comment": "# Ditto, with arrow keys"
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+Shift+Left move left"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+Shift+Down move down"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+Shift+Up move up"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+Shift+Right move right"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "comment": "#"
+  },
+  {
+    "comment": "# Workspaces:"
+  },
+  {
+    "comment": "#"
+  },
+  {
+    "comment": "# Switch to workspace"
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+1 workspace number 1"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+2 workspace number 2"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+3 workspace number 3"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+4 workspace number 4"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+5 workspace number 5"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+6 workspace number 6"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+7 workspace number 7"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+8 workspace number 8"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+9 workspace number 9"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+0 workspace number 10"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "comment": "# Move focused container to workspace"
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+Shift+1 move container to workspace number 1"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+Shift+2 move container to workspace number 2"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+Shift+3 move container to workspace number 3"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+Shift+4 move container to workspace number 4"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+Shift+5 move container to workspace number 5"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+Shift+6 move container to workspace number 6"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+Shift+7 move container to workspace number 7"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+Shift+8 move container to workspace number 8"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+Shift+9 move container to workspace number 9"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+Shift+0 move container to workspace number 10"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "comment": "# Note: workspaces can have any name you want, not just numbers."
+  },
+  {
+    "comment": "# We just use 1-10 as the default."
+  },
+  {
+    "comment": "#"
+  },
+  {
+    "comment": "# Layout stuff:"
+  },
+  {
+    "comment": "#"
+  },
+  {
+    "comment": "# You can \"split\" the current object of your focus with"
+  },
+  {
+    "comment": "# $mod+b or $mod+v, for horizontal and vertical splits"
+  },
+  {
+    "comment": "# respectively."
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+b splith"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+v splitv"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "comment": "# Switch the current container between different layout styles"
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+s layout stacking"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+w layout tabbed"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+e layout toggle split"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "comment": "# Make the current focus fullscreen"
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+f fullscreen"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "comment": "# Toggle the current focus between tiling and floating mode"
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+Shift+space floating toggle"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "comment": "# Swap focus between the tiling area and the floating area"
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+space focus mode_toggle"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "comment": "# Move focus to the parent container"
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+a focus parent"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "comment": "#"
+  },
+  {
+    "comment": "# Scratchpad:"
+  },
+  {
+    "comment": "#"
+  },
+  {
+    "comment": "# Sway has a \"scratchpad\", which is a bag of holding for windows."
+  },
+  {
+    "comment": "# You can send windows there and get them back later."
+  },
+  {
+    "comment": "# Move the currently focused window to the scratchpad"
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+Shift+minus move scratchpad"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "comment": "# Show the next scratchpad window or hide the focused scratchpad window."
+  },
+  {
+    "comment": "# If there are multiple scratchpad windows, this command cycles through them."
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+minus scratchpad show"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "comment": "#"
+  },
+  {
+    "comment": "# Resizing containers:"
+  },
+  {
+    "comment": "#"
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "mode"
+        }
+      },
+      {
+        "value": [
+          {
+            "generic_value": "\"resize\""
+          }
+        ]
+      },
+      {
+        "block": [
+          {
+            "comment": "# left will shrink the containers width"
+          },
+          {
+            "comment": "# right will grow the containers width"
+          },
+          {
+            "comment": "# up will shrink the containers height"
+          },
+          {
+            "comment": "# down will grow the containers height"
+          },
+          {
+            "config": [
+              {
+                "command": {
+                  "common_command": "bindsym"
+                }
+              },
+              {
+                "value": [
+                  {
+                    "variable_name": "$left"
+                  },
+                  {
+                    "generic_value": " resize shrink width 10px"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "config": [
+              {
+                "command": {
+                  "common_command": "bindsym"
+                }
+              },
+              {
+                "value": [
+                  {
+                    "variable_name": "$down"
+                  },
+                  {
+                    "generic_value": " resize grow height 10px"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "config": [
+              {
+                "command": {
+                  "common_command": "bindsym"
+                }
+              },
+              {
+                "value": [
+                  {
+                    "variable_name": "$up"
+                  },
+                  {
+                    "generic_value": " resize shrink height 10px"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "config": [
+              {
+                "command": {
+                  "common_command": "bindsym"
+                }
+              },
+              {
+                "value": [
+                  {
+                    "variable_name": "$right"
+                  },
+                  {
+                    "generic_value": " resize grow width 10px"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "comment": "# Ditto, with arrow keys"
+          },
+          {
+            "config": [
+              {
+                "command": {
+                  "common_command": "bindsym"
+                }
+              },
+              {
+                "value": [
+                  {
+                    "generic_value": "Left resize shrink width 10px"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "config": [
+              {
+                "command": {
+                  "common_command": "bindsym"
+                }
+              },
+              {
+                "value": [
+                  {
+                    "generic_value": "Down resize grow height 10px"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "config": [
+              {
+                "command": {
+                  "common_command": "bindsym"
+                }
+              },
+              {
+                "value": [
+                  {
+                    "generic_value": "Up resize shrink height 10px"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "config": [
+              {
+                "command": {
+                  "common_command": "bindsym"
+                }
+              },
+              {
+                "value": [
+                  {
+                    "generic_value": "Right resize grow width 10px"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "comment": "# Return to default mode"
+          },
+          {
+            "config": [
+              {
+                "command": {
+                  "common_command": "bindsym"
+                }
+              },
+              {
+                "value": [
+                  {
+                    "generic_value": "Return mode \"default\""
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "config": [
+              {
+                "command": {
+                  "common_command": "bindsym"
+                }
+              },
+              {
+                "value": [
+                  {
+                    "generic_value": "Escape mode \"default\""
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "bindsym"
+        }
+      },
+      {
+        "value": [
+          {
+            "variable_name": "$mod"
+          },
+          {
+            "generic_value": "+r mode \"resize\""
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "comment": "#"
+  },
+  {
+    "comment": "# Status Bar:"
+  },
+  {
+    "comment": "#"
+  },
+  {
+    "comment": "# Read `man 5 sway-bar` for more information about this section."
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "common_command": "bar"
+        }
+      },
+      {
+        "block": [
+          {
+            "value": [
+              {
+                "generic_value": "position top"
+              }
+            ]
+          },
+          {
+            "comment": "# When the status_command prints a new line to stdout, swaybar updates."
+          },
+          {
+            "comment": "# The default just shows the current date and time."
+          },
+          {
+            "value": [
+              {
+                "generic_value": "status_command while date +'%Y-%m-%d %l:%M:%S %p'; do sleep 1; done"
+              }
+            ]
+          },
+          {
+            "inner_block": [
+              {
+                "value": [
+                  {
+                    "generic_value": "colors"
+                  }
+                ]
+              },
+              {
+                "block": [
+                  {
+                    "value": [
+                      {
+                        "generic_value": "statusline #ffffff"
+                      }
+                    ]
+                  },
+                  {
+                    "value": [
+                      {
+                        "generic_value": "background #323232"
+                      }
+                    ]
+                  },
+                  {
+                    "value": [
+                      {
+                        "generic_value": "inactive_workspace #32323200 #32323200 #5c5c5c"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "config": [
+      {
+        "command": {
+          "criteria": "[con_id=\"something\"]"
+        }
+      },
+      {
+        "value": [
+          {
+            "generic_value": "focus"
+          }
+        ]
+      }
+    ]
+  }
+]

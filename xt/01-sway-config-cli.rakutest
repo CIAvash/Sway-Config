@@ -1,0 +1,13 @@
+use v6.d;
+
+use Test;
+use Test::Run:auth<zef:CIAvash> :runs_ok;
+
+plan 1;
+
+my IO::Path:D $module = $?FILE.IO.parent.parent;
+my IO::Path:D $script = $module.add: 'bin', 'sway-config';
+
+my @args = «$*EXECUTABLE -I $module $script»;
+
+runs_ok :args«@args[] configs», :out(*.contains('bar swaybar_command')), 'Prints configs';

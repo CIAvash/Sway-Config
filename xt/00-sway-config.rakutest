@@ -1,0 +1,15 @@
+use v6.d;
+
+use Test;
+
+use Sway::Config:auth<zef:CIAvash>;
+
+plan 3;
+
+my Sway::Config $config;
+
+lives-ok { $config .= new }, 'Object is created without errors';
+
+like $config.config_path, /'/home/' \w+ '/.config/sway/config'/, 'Config path is correct';
+
+ok $config.config, 'Config is automatically fetched from sway';

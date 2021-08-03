@@ -1,0 +1,141 @@
+{
+  "resize": {
+    "key_binding": {
+      "Down": {
+        "command": "resize grow height 10px",
+        "options": [
+        ]
+      },
+      "Escape": {
+        "command": "mode \"default\"",
+        "options": [
+        ]
+      },
+      "Left": {
+        "command": "resize shrink width 10px",
+        "options": [
+        ]
+      },
+      "Return": {
+        "command": "mode \"default\"",
+        "options": [
+        ]
+      },
+      "Right": {
+        "command": "resize grow width 10px",
+        "options": [
+        ]
+      },
+      "Up": {
+        "command": "resize shrink height 10px",
+        "options": [
+        ]
+      },
+      "h": {
+        "command": "resize shrink width 10px",
+        "options": [
+        ]
+      },
+      "j": {
+        "command": "resize grow height 10px",
+        "options": [
+        ]
+      },
+      "k": {
+        "command": "resize shrink height 10px",
+        "options": [
+        ]
+      },
+      "l": {
+        "command": "resize grow width 10px",
+        "options": [
+        ]
+      }
+    },
+    "key_bindings": [
+      {
+        "h": {
+          "command": "resize shrink width 10px",
+          "options": [
+          ]
+        }
+      },
+      {
+        "j": {
+          "command": "resize grow height 10px",
+          "options": [
+          ]
+        }
+      },
+      {
+        "k": {
+          "command": "resize shrink height 10px",
+          "options": [
+          ]
+        }
+      },
+      {
+        "l": {
+          "command": "resize grow width 10px",
+          "options": [
+          ]
+        }
+      },
+      {
+        "Left": {
+          "command": "resize shrink width 10px",
+          "options": [
+          ]
+        }
+      },
+      {
+        "Down": {
+          "command": "resize grow height 10px",
+          "options": [
+          ]
+        }
+      },
+      {
+        "Up": {
+          "command": "resize shrink height 10px",
+          "options": [
+          ]
+        }
+      },
+      {
+        "Right": {
+          "command": "resize grow width 10px",
+          "options": [
+          ]
+        }
+      },
+      {
+        "Return": {
+          "command": "mode \"default\"",
+          "options": [
+          ]
+        }
+      },
+      {
+        "Escape": {
+          "command": "mode \"default\"",
+          "options": [
+          ]
+        }
+      }
+    ],
+    "pango_markup": false,
+    "sub_commands": [
+      "bindsym h resize shrink width 10px",
+      "bindsym j resize grow height 10px",
+      "bindsym k resize shrink height 10px",
+      "bindsym l resize grow width 10px",
+      "bindsym Left resize shrink width 10px",
+      "bindsym Down resize grow height 10px",
+      "bindsym Up resize shrink height 10px",
+      "bindsym Right resize grow width 10px",
+      "bindsym Return mode \"default\"",
+      "bindsym Escape mode \"default\""
+    ]
+  }
+}

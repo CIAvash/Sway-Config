@@ -1,0 +1,379 @@
+[
+  {
+    "Mod4+Return": {
+      "command": "exec alacritty",
+      "options": [
+      ]
+    }
+  },
+  {
+    "Mod4+Shift+q": {
+      "command": "kill",
+      "options": [
+        "--to-code"
+      ]
+    }
+  },
+  {
+    "Mod4+d": {
+      "command": "exec dmenu_path | dmenu | xargs swaymsg exec --",
+      "options": [
+        "--to-code"
+      ]
+    }
+  },
+  {
+    "Mod4+Shift+c": {
+      "command": "reload",
+      "options": [
+      ]
+    }
+  },
+  {
+    "Mod4+Shift+e": {
+      "command": "exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'",
+      "options": [
+      ]
+    }
+  },
+  {
+    "Mod4+h": {
+      "command": "focus left",
+      "options": [
+        "--to-code"
+      ]
+    }
+  },
+  {
+    "Mod4+j": {
+      "command": "focus down",
+      "options": [
+        "--to-code"
+      ]
+    }
+  },
+  {
+    "Mod4+k": {
+      "command": "focus up",
+      "options": [
+        "--to-code"
+      ]
+    }
+  },
+  {
+    "Mod4+l": {
+      "command": "focus right",
+      "options": [
+        "--to-code"
+      ]
+    }
+  },
+  {
+    "Mod4+Left": {
+      "command": "focus left",
+      "options": [
+      ]
+    }
+  },
+  {
+    "Mod4+Down": {
+      "command": "focus down",
+      "options": [
+      ]
+    }
+  },
+  {
+    "Mod4+Up": {
+      "command": "focus up",
+      "options": [
+      ]
+    }
+  },
+  {
+    "Mod4+Right": {
+      "command": "focus right",
+      "options": [
+      ]
+    }
+  },
+  {
+    "Mod4+Shift+h": {
+      "command": "move left",
+      "options": [
+      ]
+    }
+  },
+  {
+    "Mod4+Shift+j": {
+      "command": "move down",
+      "options": [
+      ]
+    }
+  },
+  {
+    "Mod4+Shift+k": {
+      "command": "move up",
+      "options": [
+      ]
+    }
+  },
+  {
+    "Mod4+Shift+l": {
+      "command": "move right",
+      "options": [
+      ]
+    }
+  },
+  {
+    "Mod4+Shift+Left": {
+      "command": "move left",
+      "options": [
+      ]
+    }
+  },
+  {
+    "Mod4+Shift+Down": {
+      "command": "move down",
+      "options": [
+      ]
+    }
+  },
+  {
+    "Mod4+Shift+Up": {
+      "command": "move up",
+      "options": [
+      ]
+    }
+  },
+  {
+    "Mod4+Shift+Right": {
+      "command": "move right",
+      "options": [
+      ]
+    }
+  },
+  {
+    "Mod4+1": {
+      "command": "workspace number 1",
+      "options": [
+      ]
+    }
+  },
+  {
+    "Mod4+2": {
+      "command": "workspace number 2",
+      "options": [
+      ]
+    }
+  },
+  {
+    "Mod4+3": {
+      "command": "workspace number 3",
+      "options": [
+      ]
+    }
+  },
+  {
+    "Mod4+4": {
+      "command": "workspace number 4",
+      "options": [
+      ]
+    }
+  },
+  {
+    "Mod4+5": {
+      "command": "workspace number 5",
+      "options": [
+      ]
+    }
+  },
+  {
+    "Mod4+6": {
+      "command": "workspace number 6",
+      "options": [
+      ]
+    }
+  },
+  {
+    "Mod4+7": {
+      "command": "workspace number 7",
+      "options": [
+      ]
+    }
+  },
+  {
+    "Mod4+8": {
+      "command": "workspace number 8",
+      "options": [
+      ]
+    }
+  },
+  {
+    "Mod4+9": {
+      "command": "workspace number 9",
+      "options": [
+      ]
+    }
+  },
+  {
+    "Mod4+0": {
+      "command": "workspace number 10",
+      "options": [
+      ]
+    }
+  },
+  {
+    "Mod4+Shift+1": {
+      "command": "move container to workspace number 1",
+      "options": [
+      ]
+    }
+  },
+  {
+    "Mod4+Shift+2": {
+      "command": "move container to workspace number 2",
+      "options": [
+      ]
+    }
+  },
+  {
+    "Mod4+Shift+3": {
+      "command": "move container to workspace number 3",
+      "options": [
+      ]
+    }
+  },
+  {
+    "Mod4+Shift+4": {
+      "command": "move container to workspace number 4",
+      "options": [
+      ]
+    }
+  },
+  {
+    "Mod4+Shift+5": {
+      "command": "move container to workspace number 5",
+      "options": [
+      ]
+    }
+  },
+  {
+    "Mod4+Shift+6": {
+      "command": "move container to workspace number 6",
+      "options": [
+      ]
+    }
+  },
+  {
+    "Mod4+Shift+7": {
+      "command": "move container to workspace number 7",
+      "options": [
+      ]
+    }
+  },
+  {
+    "Mod4+Shift+8": {
+      "command": "move container to workspace number 8",
+      "options": [
+      ]
+    }
+  },
+  {
+    "Mod4+Shift+9": {
+      "command": "move container to workspace number 9",
+      "options": [
+      ]
+    }
+  },
+  {
+    "Mod4+Shift+0": {
+      "command": "move container to workspace number 10",
+      "options": [
+      ]
+    }
+  },
+  {
+    "Mod4+b": {
+      "command": "splith",
+      "options": [
+      ]
+    }
+  },
+  {
+    "Mod4+v": {
+      "command": "splitv",
+      "options": [
+      ]
+    }
+  },
+  {
+    "Mod4+s": {
+      "command": "layout stacking",
+      "options": [
+      ]
+    }
+  },
+  {
+    "Mod4+w": {
+      "command": "layout tabbed",
+      "options": [
+      ]
+    }
+  },
+  {
+    "Mod4+e": {
+      "command": "layout toggle split",
+      "options": [
+      ]
+    }
+  },
+  {
+    "Mod4+f": {
+      "command": "fullscreen",
+      "options": [
+      ]
+    }
+  },
+  {
+    "Mod4+Shift+space": {
+      "command": "floating toggle",
+      "options": [
+      ]
+    }
+  },
+  {
+    "Mod4+space": {
+      "command": "focus mode_toggle",
+      "options": [
+      ]
+    }
+  },
+  {
+    "Mod4+a": {
+      "command": "focus parent",
+      "options": [
+      ]
+    }
+  },
+  {
+    "Mod4+Shift+minus": {
+      "command": "move scratchpad",
+      "options": [
+      ]
+    }
+  },
+  {
+    "Mod4+minus": {
+      "command": "scratchpad show",
+      "options": [
+      ]
+    }
+  },
+  {
+    "Mod4+r": {
+      "command": "mode \"resize\"",
+      "options": [
+      ]
+    }
+  }
+]

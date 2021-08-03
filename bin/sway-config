@@ -1,0 +1,7 @@
+#!/usr/bin/env raku
+
+use v6.d;
+
+my %*SUB-MAIN-OPTS = :named-anywhere;
+
+use Sway::Config::CLI:auth<zef:CIAvash>;

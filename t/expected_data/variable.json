@@ -1,0 +1,10 @@
+{
+  "$bindsym": "bindsym --to-code",
+  "$down": "j",
+  "$left": "h",
+  "$menu": "dmenu_path | dmenu | xargs swaymsg exec --",
+  "$mod": "Mod4",
+  "$right": "l",
+  "$term": "alacritty",
+  "$up": "k"
+}
