@@ -28,7 +28,7 @@ sub get_config_path returns IO::Path:D is export(:config) {
 
     CATCH {
         when X::AdHoc {
-            note 'Sway::Config: Could not get config path.' and exit 1
+            note 'Sway::Config: Could not get config path.';
         }
     }
 

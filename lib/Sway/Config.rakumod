@@ -78,9 +78,9 @@ has Match $!match;       #= The raw match object
 =METHODS
 
 submethod TWEAK {
-    my $config_dir;
+    my IO::Path $config_dir;
 
-    $!config_path //= get_config_path;
+    $!config_path //= get_config_path unless $!config;
 
     with $!config_path {
         $config_dir = .parent;
@@ -88,7 +88,7 @@ submethod TWEAK {
     }
 
     unless $!config or ($!config_path and $!config_path.f) {
-        note 'Sway::Config: Need at least a config or/and a config path' and exit 1;
+        note 'Sway::Config: Need at least a config or config path' and exit 1;
     }
 
     $!match = Sway::Config::Grammar.subparse: $!config, actions => Sway::Config::Actions.new: :$config_dir;
