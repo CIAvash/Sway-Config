@@ -32,13 +32,15 @@ This program comes with NO WARRANTY.
 END
 
 #| Prints configs, variables, modes, key_bindings as JSON
-proto MAIN (Bool :i(:$stdin), Str :c(:$config-path), |) is export {
+proto MAIN (Bool :i(:$stdin), Str :c(:$config-path), Bool :v(:$version),  |) is export {
     $config = do if $stdin {
         Sway::Config.new: config => $*IN.slurp, config_path => $config-path;
     } elsif $config-path {
         Sway::Config.new: config_path => $config-path;
-    } else {
+    } elsif not $version {
         Sway::Config.new;
+    } else {
+        Nil;
     }
     {*}
 }
