@@ -19,6 +19,6 @@
     "test-depends": [
         "JSON::Fast",
         "Test::Run:auth<zef:CIAvash>:ver<0.1.0>",
-        "Test::Differences:auth<github:rbt>"
+        "Test::Differences:auth<zef:rbt>"
     ]
 }

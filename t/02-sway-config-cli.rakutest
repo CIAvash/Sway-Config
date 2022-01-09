@@ -2,7 +2,7 @@ use v6.d;
 
 use Test;
 use Test::Run:auth<zef:CIAvash> :runs_ok;
-use Test::Differences:auth<github:rbt>;
+use Test::Differences:auth<zef:rbt>;
 
 plan 8;
 

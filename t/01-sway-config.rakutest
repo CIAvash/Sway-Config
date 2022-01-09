@@ -175,7 +175,7 @@ subtest 'Correct key_bindings are returned', {
         bail-out 'Nothing was matched during parsing' unless $config_match;
     }
 
-    use Test::Differences:auth<github:rbt>;
+    use Test::Differences:auth<zef:rbt>;
 
     for <match configs variable mode key_binding key_bindings all> -> $method {
         my IO::Path:D $expected_file = $expected_data_dir.add: "$method.json";
