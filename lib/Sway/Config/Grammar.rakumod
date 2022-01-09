@@ -3,7 +3,8 @@ use v6.d;
 unit grammar Sway::Config::Grammar:auth($?DISTRIBUTION.meta<auth>);
 
 token TOP {
-    [<comment> | <config> | \s]*
+    :my Bool $*inside_mode = False;
+    [<comment> | <config> { $*inside_mode = False } | \s]*
 }
 
 token comment {
@@ -11,7 +12,8 @@ token comment {
 }
 
 rule config {
-    <command> <command_option>* <value>? <block>?
+    || <command> { with $<command> { when 'mode' { $*inside_mode = True } } } <command_option>* <value>? <block>?
+    || <value> <block>?
 }
 
 token command_option {
@@ -19,7 +21,7 @@ token command_option {
 }
 
 token block {
-    '{' ~ '}' [<comment> || \s || <config> || <inner_block> || <value>]*
+    '{' ~ '}' [<comment> || \s || <?command> <config> || <inner_block> || <value>]*
 }
 
 rule inner_block {
@@ -27,7 +29,6 @@ rule inner_block {
 }
 
 token command {
-    | <variable_name>
     | <config_command>
     | <common_command>
     | <criteria>
@@ -95,7 +96,7 @@ token variable_name {
 }
 
 
-=COPYRIGHT Copyright © 2021 Siavash Askari Nasr
+=COPYRIGHT Copyright © 2021, 2022 Siavash Askari Nasr
 
 =begin LICENSE
 This file is part of Sway::Config.

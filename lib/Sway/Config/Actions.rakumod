@@ -25,9 +25,14 @@ my rule set_bind_mode {
 
 method config ($match) {
     my $command = $match<command>.made;
-    my $command_option = $match<command_option>».made || Empty;
     my $value = $match<value>.made // Empty;
-    my $config = join ' ', $command, $command_option || Empty, $value;
+
+    my $config = do if $command {
+        my $command_option = $match<command_option>».made || Empty;
+        join ' ', $command, $command_option || Empty, $value;
+    } else {
+        $value;
+    }
 
     $match.make: do with $match<block> {
         slip $config X[&(* ~ ' ' ~ *)] .made;
@@ -36,7 +41,7 @@ method config ($match) {
     }
 
     for $match.made -> $made_config {
-        with $command {
+        with $command || $value {
             when 'set' {
                 %!variable{~$<name>} = ~$<value> if $made_config ~~ &set_bind_mode;
             }
@@ -47,7 +52,7 @@ method config ($match) {
                 }
             }
             when *.starts-with: 'bind' {
-                if $made_config ~~ &set_bind_mode {
+                if not $*inside_mode and $made_config ~~ &set_bind_mode {
                     my @options = .words with $<option>;
 
                     %!key_binding{~$<name>}<command> = ~$<value>;
@@ -56,7 +61,7 @@ method config ($match) {
                     @!key_bindings.append: ~$<name> => %(
                         command => ~$<value>,
                         options => @options
-                    );
+                    )
                 }
             }
             when 'mode' {
@@ -85,15 +90,7 @@ method config ($match) {
                         %!mode{$mode_name}<key_bindings>.append: $name => %(
                             command => $value,
                             options => @options
-                        );
-
-                        with %!key_binding{$name}<command> {
-                            %!key_binding{$name}:delete when $value;
-                        }
-
-                        with @!key_bindings.first: { .key eq $name and .value<command> eq $value }, :k {
-                            @!key_bindings.splice: $_, 1;
-                        }
+                        )
                     }
                 }
             }
@@ -159,7 +156,7 @@ method generic_value ($/) {
     make ~$/;
 }
 
-=COPYRIGHT Copyright © 2021 Siavash Askari Nasr
+=COPYRIGHT Copyright © 2021, 2022 Siavash Askari Nasr
 
 =begin LICENSE
 This file is part of Sway::Config.
