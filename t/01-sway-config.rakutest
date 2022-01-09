@@ -33,6 +33,9 @@ subtest 'Config got parsed', {
         $bindsym Down resize grow height 10px
         $bindsym Up resize shrink height 10px
         $bindsym Right resize grow width 10px
+        $bindsym {
+            $mod+Right resize grow width 20px
+        }
 
         # Return to default mode
         $bindsym Return mode "default"
@@ -65,8 +68,8 @@ subtest 'Config got parsed', {
 }
 
 subtest 'Correct match is returned', {
-    plan 13;
-    
+    plan 15;
+
     is $config_match.caps.elems, 12, 'Number of captures is correct';
     is $config_match<comment>[0], '# Sway Config', 'First comment is matched correctly';
     is $config_match<config>[0]<command>, 'set', 'First config command is matched correctly';
@@ -85,32 +88,38 @@ subtest 'Correct match is returned', {
     'Input value is matched correctly';
     is $config_match<config>[5]<block><value>[0]<generic_value>, 'xkb_layout "us,ir"',
     'Input block value is matched correctly';
-    is $config_match<config>[7]<block><config>[0].Str.trim,
+    is $config_match<config>[7]<block><value>[0].Str.trim,
     '$bindsym Left resize shrink width 10px', 'First value of last block is matched correctly';
+    is $config_match<config>[7]<block><inner_block>[0]<value>.Str.trim,
+    '$bindsym', 'Value of inner block is matched correctly';
+    is $config_match<config>[7]<block><inner_block>[0]<block><value>[0].Str.trim,
+    '$mod+Right resize grow width 20px', 'Inner value of inner block is matched correctly';
 }
 
 subtest 'Correct configs are returned', {
-    plan 8;
+    plan 9;
 
     my @configs = $sway_config.configs;
-    is @configs.elems, 22, 'Number of configs is correct';
+    is @configs.elems, 23, 'Number of configs is correct';
     is @configs[0], 'set $mod Mod4', 'First config is correct';
     is @configs[4], 'bindsym Mod4+Return exec sakura', 'First bindsym is correct';
     is @configs[8], 'bindsym --to-code Mod4+h focus left', '$bindsym with multiple variables is correct';
     is @configs[9], 'mode resize bindsym --to-code Left resize shrink width 10px',
     'Block content is absorbed correctly';
-    is @configs[15], 'bindsym --to-code --locked Mod4+r mode resize',
+    is @configs[13], 'mode resize bindsym --to-code Mod4+Right resize grow width 20px',
+    'Block content is absorbed correctly';
+    is @configs[16], 'bindsym --to-code --locked Mod4+r mode resize',
     'Command with variable and multiple options is correct';
     subtest 'Block with inner block is absorbed correctly', {
         plan 5;
 
-        is @configs[16], 'bar position top';
-        is @configs[17], 'bar status_command while date +\'%Y-%m-%d %l:%M:%S %p\'; do sleep 1; done';
-        is @configs[18], 'bar colors statusline #ffffff';
-        is @configs[19], 'bar colors background #323232';
-        is @configs[20], 'bar colors inactive_workspace #32323200 #32323200 #5c5c5c';
+        is @configs[17], 'bar position top';
+        is @configs[18], 'bar status_command while date +\'%Y-%m-%d %l:%M:%S %p\'; do sleep 1; done';
+        is @configs[19], 'bar colors statusline #ffffff';
+        is @configs[20], 'bar colors background #323232';
+        is @configs[21], 'bar colors inactive_workspace #32323200 #32323200 #5c5c5c';
     }
-    is @configs[21], '[con_id="something"] focus';
+    is @configs[22], '[con_id="something"] focus';
 }
 
 subtest 'Correct variable is returned', {
@@ -123,23 +132,27 @@ subtest 'Correct variable is returned', {
 }
 
 subtest 'Correct mode is returned', {
-    plan 11;
+    plan 13;
 
     my %mode = $sway_config.mode;
     is %mode.elems, 1, 'Number of modes is correct';
     is %mode<resize><pango_markup>, False, 'Mode\'s command option is correct';
-    is %mode<resize><sub_commands>.elems, 6, 'Mode\'s commands count is correct';
-    is %mode<resize><key_binding>.elems, 6, 'Mode\'s key bindings count is correct';
+    is %mode<resize><sub_commands>.elems, 7, 'Mode\'s commands count is correct';
+    is %mode<resize><key_binding>.elems, 7, 'Mode\'s key bindings count is correct';
     is %mode<resize><key_binding><Left><command>, 'resize shrink width 10px',
     'Mode\'s Left key binding is correct';
+    is %mode<resize><key_binding><Mod4+Right><command>, 'resize grow width 20px',
+    'Mode\'s Mod4+Left key binding is correct';
     is-deeply %mode<resize><key_binding><Left><options>, ['--to-code'], 'Mode\'s Left key options are correct';
     is %mode<resize><key_binding><Escape><command>, 'mode "default"', 'Mode\'s last key binding is correct';
-    is %mode<resize><key_bindings>.elems, 6, 'Mode\'s key bindings count is correct';
+    is %mode<resize><key_bindings>.elems, 7, 'Mode\'s key bindings count is correct';
     is %mode<resize><key_bindings>[0]<Left><command>, 'resize shrink width 10px',
     'Mode\'s Left key binding is correct';
     is-deeply %mode<resize><key_bindings>[0]<Left><options>, ['--to-code'],
     'Mode\'s Left key options are correct';
-    is %mode<resize><key_bindings>[5]<Escape><command>, 'mode "default"', 'Mode\'s last key binding is correct';
+    is %mode<resize><key_bindings>[4]<Mod4+Right><command>, 'resize grow width 20px',
+    'Mode\'s Mod4+Right key binding is correct';
+    is %mode<resize><key_bindings>[6]<Escape><command>, 'mode "default"', 'Mode\'s last key binding is correct';
 }
 
 subtest 'Correct key_binding is returned', {

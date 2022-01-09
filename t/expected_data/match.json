@@ -247,12 +247,13 @@
   {
     "config": [
       {
-        "command": {
-          "variable_name": "$bindsym"
-        }
-      },
-      {
         "value": [
+          {
+            "variable_name": "$bindsym"
+          },
+          {
+            "generic_value": " "
+          },
           {
             "variable_name": "$mod"
           },
@@ -269,12 +270,13 @@
   {
     "config": [
       {
-        "command": {
-          "variable_name": "$bindsym"
-        }
-      },
-      {
         "value": [
+          {
+            "variable_name": "$bindsym"
+          },
+          {
+            "generic_value": " "
+          },
           {
             "variable_name": "$mod"
           },
@@ -381,12 +383,13 @@
   {
     "config": [
       {
-        "command": {
-          "variable_name": "$bindsym"
-        }
-      },
-      {
         "value": [
+          {
+            "variable_name": "$bindsym"
+          },
+          {
+            "generic_value": " "
+          },
           {
             "variable_name": "$mod"
           },
@@ -406,12 +409,13 @@
   {
     "config": [
       {
-        "command": {
-          "variable_name": "$bindsym"
-        }
-      },
-      {
         "value": [
+          {
+            "variable_name": "$bindsym"
+          },
+          {
+            "generic_value": " "
+          },
           {
             "variable_name": "$mod"
           },
@@ -431,12 +435,13 @@
   {
     "config": [
       {
-        "command": {
-          "variable_name": "$bindsym"
-        }
-      },
-      {
         "value": [
+          {
+            "variable_name": "$bindsym"
+          },
+          {
+            "generic_value": " "
+          },
           {
             "variable_name": "$mod"
           },
@@ -456,12 +461,13 @@
   {
     "config": [
       {
-        "command": {
-          "variable_name": "$bindsym"
-        }
-      },
-      {
         "value": [
+          {
+            "variable_name": "$bindsym"
+          },
+          {
+            "generic_value": " "
+          },
           {
             "variable_name": "$mod"
           },
