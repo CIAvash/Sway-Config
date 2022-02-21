@@ -43,10 +43,10 @@ subtest 'Config got parsed', {
     }
     $bindsym --locked $mod+r mode resize
 
-    mode 'Name with space' {
+    mode 'Name with\' space' {
         $bindsym Escape mode default
     }
-    $bindsym $mod+n mode 'Name with space'
+    $bindsym $mod+n mode 'Name with\' space'
 
     bar {
         position top
@@ -115,9 +115,9 @@ subtest 'Correct configs are returned', {
     'Block content is absorbed correctly';
     is @configs[16], 'bindsym --to-code --locked Mod4+r mode resize',
     'Command with variable and multiple options is correct';
-    is @configs[17], 'mode \'Name with space\' bindsym --to-code Escape mode default',
+    is @configs[17], 'mode \'Name with\\\' space\' bindsym --to-code Escape mode default',
     'Mode with a space in its name detected correctly';
-    is @configs[18], 'bindsym --to-code Mod4+n mode \'Name with space\'',
+    is @configs[18], 'bindsym --to-code Mod4+n mode \'Name with\\\' space\'',
     'Binding for a mode with a space in its name is set correctly';
     subtest 'Block with inner block is absorbed correctly', {
         plan 5;
@@ -141,7 +141,7 @@ subtest 'Correct variable is returned', {
 }
 
 subtest 'Correct mode is returned', {
-    plan 13;
+    plan 15;
 
     my %mode = $sway_config.mode;
     is %mode.elems, 2, 'Number of modes is correct';
@@ -162,6 +162,9 @@ subtest 'Correct mode is returned', {
     is %mode<resize><key_bindings>[4]<Mod4+Right><command>, 'resize grow width 20px',
     'Mode\'s Mod4+Right key binding is correct';
     is %mode<resize><key_bindings>[6]<Escape><command>, 'mode "default"', 'Mode\'s last key binding is correct';
+
+    is %mode{'Name with\\\' space'}<key_binding>.elems, 1, 'Mode\'s key bindings count is correct';
+    is %mode{'Name with\\\' space'}<key_binding><Escape><command>, 'mode default', 'Mode\'s key binding is correct';
 }
 
 subtest 'Correct key_binding is returned', {

@@ -19,8 +19,19 @@ method comment ($/) {
     make ~$/;
 }
 
+my token quote ($quote) {
+    $quote ~ $quote [ \\ $quote || <{ "<-[$quote]>" }> ]+
+}
+
+my token name {
+    <quote: "'"> || <quote: '"'> || \S+
+}
+
 my rule set_bind_mode {
-    ^^['bind'\S+ | 'mode' | 'set'] $<option>=['--'\S+]* %% \s* $<name>=\S+ $<value>=\N+
+    ^^['bind'\S+ | 'mode' | 'set']
+    $<option>=['--'\S+]* %% \s*
+    <name>
+    $<value>=\N+
 }
 
 method config ($match) {
@@ -69,9 +80,9 @@ method config ($match) {
                     my Bool:D $pango_markup = $mode_match<option> ~~ '--pango_markup';
 
                     my $mode_name = do if $pango_markup {
-                        ~$mode_match<name>;
+                        ~$mode_match<name>
                     } else {
-                        $mode_match<name>.subst: /<["']>/, '', :g;
+                        $mode_match<name>.subst: /^ <["']> || <["']> $/, '', :g
                     }
 
                     my $sub_command = ~$mode_match<value>;
