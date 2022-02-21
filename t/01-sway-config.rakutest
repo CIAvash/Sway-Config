@@ -43,6 +43,11 @@ subtest 'Config got parsed', {
     }
     $bindsym --locked $mod+r mode resize
 
+    mode 'Name with space' {
+        $bindsym Escape mode default
+    }
+    $bindsym $mod+n mode 'Name with space'
+
     bar {
         position top
 
@@ -70,7 +75,7 @@ subtest 'Config got parsed', {
 subtest 'Correct match is returned', {
     plan 15;
 
-    is $config_match.caps.elems, 12, 'Number of captures is correct';
+    is $config_match.caps.elems, 14, 'Number of captures is correct';
     is $config_match<comment>[0], '# Sway Config', 'First comment is matched correctly';
     is $config_match<config>[0]<command>, 'set', 'First config command is matched correctly';
     is $config_match<config>[0]<value><variable_name>, '$mod', 'First config variable is matched correctly';
@@ -97,10 +102,10 @@ subtest 'Correct match is returned', {
 }
 
 subtest 'Correct configs are returned', {
-    plan 9;
+    plan 11;
 
     my @configs = $sway_config.configs;
-    is @configs.elems, 23, 'Number of configs is correct';
+    is @configs.elems, 25, 'Number of configs is correct';
     is @configs[0], 'set $mod Mod4', 'First config is correct';
     is @configs[4], 'bindsym Mod4+Return exec sakura', 'First bindsym is correct';
     is @configs[8], 'bindsym --to-code Mod4+h focus left', '$bindsym with multiple variables is correct';
@@ -110,16 +115,20 @@ subtest 'Correct configs are returned', {
     'Block content is absorbed correctly';
     is @configs[16], 'bindsym --to-code --locked Mod4+r mode resize',
     'Command with variable and multiple options is correct';
+    is @configs[17], 'mode \'Name with space\' bindsym --to-code Escape mode default',
+    'Mode with a space in its name detected correctly';
+    is @configs[18], 'bindsym --to-code Mod4+n mode \'Name with space\'',
+    'Binding for a mode with a space in its name is set correctly';
     subtest 'Block with inner block is absorbed correctly', {
         plan 5;
 
-        is @configs[17], 'bar position top';
-        is @configs[18], 'bar status_command while date +\'%Y-%m-%d %l:%M:%S %p\'; do sleep 1; done';
-        is @configs[19], 'bar colors statusline #ffffff';
-        is @configs[20], 'bar colors background #323232';
-        is @configs[21], 'bar colors inactive_workspace #32323200 #32323200 #5c5c5c';
+        is @configs[19], 'bar position top';
+        is @configs[20], 'bar status_command while date +\'%Y-%m-%d %l:%M:%S %p\'; do sleep 1; done';
+        is @configs[21], 'bar colors statusline #ffffff';
+        is @configs[22], 'bar colors background #323232';
+        is @configs[23], 'bar colors inactive_workspace #32323200 #32323200 #5c5c5c';
     }
-    is @configs[22], '[con_id="something"] focus';
+    is @configs[24], '[con_id="something"] focus';
 }
 
 subtest 'Correct variable is returned', {
@@ -135,7 +144,7 @@ subtest 'Correct mode is returned', {
     plan 13;
 
     my %mode = $sway_config.mode;
-    is %mode.elems, 1, 'Number of modes is correct';
+    is %mode.elems, 2, 'Number of modes is correct';
     is %mode<resize><pango_markup>, False, 'Mode\'s command option is correct';
     is %mode<resize><sub_commands>.elems, 7, 'Mode\'s commands count is correct';
     is %mode<resize><key_binding>.elems, 7, 'Mode\'s key bindings count is correct';
@@ -159,7 +168,7 @@ subtest 'Correct key_binding is returned', {
     plan 4;
 
     my %key_binding = $sway_config.key_binding;
-    is %key_binding.elems, 3, 'Number of key bindings is correct';
+    is %key_binding.elems, 4, 'Number of key bindings is correct';
     is %key_binding<Mod4+Return><command>, 'exec sakura', 'First key binding is correct';
     is %key_binding<Mod4+r><command>, 'mode resize', 'Last key binding is correct';
     is %key_binding<Mod4+r><options>, <--to-code --locked>, 'Last key options are correct';
@@ -169,7 +178,7 @@ subtest 'Correct key_bindings are returned', {
     plan 4;
 
     my @key_binding = $sway_config.key_bindings;
-    is @key_binding.elems, 3, 'Number of key bindings is correct';
+    is @key_binding.elems, 4, 'Number of key bindings is correct';
     is @key_binding[0]<Mod4+Return><command>, 'exec sakura', 'First key binding is correct';
     is @key_binding[2]<Mod4+r><command>, 'mode resize', 'Last key binding is correct';
     is @key_binding[2]<Mod4+r><options>, <--to-code --locked>, 'Last key options are correct';
