@@ -4,7 +4,7 @@
     "description": "Library and script for parsing Sway window manager's config file.",
     "authors": ["Siavash Askari Nasr"],
     "auth": "zef:CIAvash",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "tags": ["Sway", "SwayWM", "Parser", "Config", "App", "Library", "CLI", "Command Line"],
     "license": "LGPL-3.0-or-later",
     "source-url": "https://github.com/CIAvash/Sway-Config.git",
@@ -18,7 +18,7 @@
     "depends": ["JSON::Fast", "Pod::Contents:auth<zef:CIAvash>"],
     "test-depends": [
         "JSON::Fast",
-        "Test::Run:auth<zef:CIAvash>:ver<0.1.0>",
-        "Test::Differences:auth<zef:rbt>"
+        "Test::Run:auth<zef:CIAvash>:ver<0.1.*>",
+        "Test::Differences:auth<zef:rbt>:ver<1.*.*>"
     ]
 }
